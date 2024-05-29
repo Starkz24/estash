@@ -14,8 +14,9 @@ export default function Table() {
       });
       if (response.ok) {
         const data = await response.json();
-        setBoard(data);
-        console.log(data);
+        // Assign badges based on points
+        const boardWithBadges = assignBadges(data);
+        setBoard(boardWithBadges);
       } else {
         const data = await response.json();
         alert(data.error);
@@ -24,6 +25,29 @@ export default function Table() {
 
     leaderboardPoints();
   }, []);
+
+  // Function to assign badges based on points
+  const assignBadges = (data) => {
+    // Sort users by points in descending order
+    const sortedData = data.sort((a, b) => b.points - a.points);
+
+    // Assign badges to top users and users crossing certain point limits
+    const usersWithBadges = sortedData.map((user, index) => {
+      let badges = [];
+      if (index === 0) {
+        badges.push("Top Performer");
+      }
+      if (user.points >= 1000) {
+        badges.push("Eco Warrior");
+      }
+      if (user.points >= 500) {
+        badges.push("Environment Champion");
+      }
+      return { ...user, badges: badges };
+    });
+
+    return usersWithBadges;
+  };
 
   return (
     <div id="profile" className="flex justify-center items-center">
@@ -46,6 +70,9 @@ function Items({ data }) {
           <th className="py-2 px-4 bg-gray-200 font-semibold text-gray-700">
             Points
           </th>
+          <th className="py-2 px-4 bg-gray-200 font-semibold text-gray-700">
+            Badges
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -54,10 +81,10 @@ function Items({ data }) {
             <td className="py-2 px-4 border-b border-gray-200 text-center">{value.username}</td>
             <td className="py-2 px-4 border-b border-gray-200 text-center">{value.location}</td>
             <td className="py-2 px-4 border-b border-gray-200 text-center">{value.points}</td>
+            <td className="py-2 px-4 border-b border-gray-200 text-center">{value.badges.join(", ")}</td>
           </tr>
         ))}
       </tbody>
     </table>
   );
 }
-
