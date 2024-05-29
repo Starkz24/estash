@@ -14,7 +14,6 @@ export default function Table() {
       });
       if (response.ok) {
         const data = await response.json();
-        // Assign badges based on points
         const boardWithBadges = assignBadges(data);
         setBoard(boardWithBadges);
       } else {
@@ -26,12 +25,8 @@ export default function Table() {
     leaderboardPoints();
   }, []);
 
-  // Function to assign badges based on points
   const assignBadges = (data) => {
-    // Sort users by points in descending order
     const sortedData = data.sort((a, b) => b.points - a.points);
-
-    // Assign badges to top users and users crossing certain point limits
     const usersWithBadges = sortedData.map((user, index) => {
       let badges = [];
       if (index === 0) {
