@@ -5,7 +5,7 @@ import json
 import numpy as np
 from keras.models import load_model
 from flask_cors import CORS
-# Define a list of class names corresponding to your model's output classes
+
 class_names = ["Glass", "Metal", "Paper", "Plastic", "Battery", "Biological", "Trash"]
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ def detect():
 
 def detect_objects_on_image(image):
     model = load_model("./keras_model.h5", compile=False)
-    # model.summary()  # Print the model summary
+    model.summary()  # Print the model summary
 
     input_shape = model.input_shape[1:3]
     resized_image = image.resize(input_shape)

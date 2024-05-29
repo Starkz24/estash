@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import "../../CSS/scanner.css";
-import Stats from "./Stats"
 
 const Scanner = () => {
   const [boxes, setBoxes] = useState([]);
   const [points, setPoints] = useState(0);
+  const [error, setError] = useState('');
 
   const handleUpload = async (event) => {
+    setError('');
     const file = event.target.files[0];
+
+    if (file.type !== 'image/jpeg') {
+      setError('Please upload a JPEG image.');
+      return;
+    }
+
     const data = new FormData();
     data.append('image_file', file);
 
-    const response = await fetch('http://54.66.167.78:4000/detect', {
+    const response = await fetch('http://localhost:4000/detect', {
       method: 'POST',
       body: data,
     });
@@ -24,15 +31,15 @@ const Scanner = () => {
     const elementPoints = [10, 20, 5, 15, 25, 8, 12];
 
     let totalPoints = points; 
-      const index = elements.indexOf(boxesData[0]);
-      if (index !== -1) {
-        totalPoints += elementPoints[index];
-      }
+    const index = elements.indexOf(boxesData[0]);
+    if (index !== -1) {
+      totalPoints += elementPoints[index];
+    }
     setPoints(totalPoints);
     console.log(points);
     
+    setError('');
   };
-
 
   useEffect(() => {
     async function pointsUpdate() {
@@ -55,7 +62,6 @@ const Scanner = () => {
     pointsUpdate();
   }, [points]);
 
-
   return (
     <div>
       <div className="button-borders mt-3">
@@ -63,15 +69,17 @@ const Scanner = () => {
           UPLOAD POINTS: {points}
           <input id="fileInput" type="file" onChange={handleUpload} style={{ display: "none" }} />
         </label>
-        </div>
-        <div>
-        <div class="button-borders mt-7">
-        <button class="primary-button">{boxes.map((box, index) => (
-            <li class="points" key={index}>{box}</li>
-          ))}</button>
       </div>
+      {error && <div className="error-message text-white">{error}</div>} 
+      <div>
+        <div className="button-borders mt-7">
+          <button className="primary-button">
+            {boxes.map((box, index) => (
+              <li className="points" key={index}>{box}</li>
+            ))}
+          </button>
+        </div>
         <ul>
-          
         </ul>
       </div>
     </div>

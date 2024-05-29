@@ -21,7 +21,7 @@ const loginUser = async (req, res) => {
         }
 
         const token = createTokenResponse(user);
-        console.log(token);
+        // console.log(token);
         res.status(200).json({ token });
 
     } catch (error) {

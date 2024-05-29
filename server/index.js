@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const routes = require('./router/routes');  
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 1337;
@@ -11,7 +12,7 @@ const MONGO_URI = process.env.MONGO_URI ;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://amankumarz2404:callofduty@cluster0.lf2rgu2.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
@@ -22,9 +23,9 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

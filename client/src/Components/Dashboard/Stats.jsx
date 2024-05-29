@@ -2,31 +2,25 @@ import React, { useState, useEffect } from "react";
 
 const Stats = () => {
   const [totalPoints, setTotalPoints] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchPoints() {
-      const token = localStorage.getItem("token");
-
       try {
-        const response = await fetch("/api/points", {
-          method: "POST",
-          headers: {
-            "x-access-token": token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ points: 0 }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const { points } = data;
-
-          setTotalPoints(points);
-        } else {
-          console.log("Error:", response.status);
+        const response = await fetch("/api/leaderboard");
+        if (!response.ok) {
+          throw new Error("Failed to fetch leaderboard");
         }
+        const data = await response.json();
+        const points = data.reduce((total, user) => total + user.points, 0);
+        setTotalPoints(points);
+        setError(null);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching leaderboard:", error.message);
+        setError("Error fetching leaderboard");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -54,7 +48,9 @@ const Stats = () => {
               >
                 Total Points
               </th>
-              <td className="px-6 py-4 font-extrabold">{totalPoints}</td>
+              <td className="px-6 py-4 font-extrabold">
+                {loading ? "Loading..." : error ? error : totalPoints}
+              </td>
             </tr>
           </tbody>
         </table>
