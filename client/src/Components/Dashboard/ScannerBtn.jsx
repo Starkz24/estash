@@ -38,9 +38,9 @@ const Scanner = () => {
     setPoints(totalPoints);
     console.log(points);
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1800);
     
     setError('');
   };

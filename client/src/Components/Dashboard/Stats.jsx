@@ -40,7 +40,7 @@ const Stats = () => {
           </caption>
           <thead className="text-xs text-white uppercase bg-gray-900"></thead>
           <div className="border border-transparent" />
-          <tbody>
+          {/* <tbody>
             <tr className="bg-slate-900">
               <th
                 scope="row"
@@ -52,7 +52,7 @@ const Stats = () => {
                 {loading ? "Loading..." : error ? error : totalPoints}
               </td>
             </tr>
-          </tbody>
+          </tbody> */}
         </table>
       </div>
     </div>

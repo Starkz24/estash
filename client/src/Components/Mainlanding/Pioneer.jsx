@@ -7,9 +7,9 @@ const Pioneer = () => {
       <div class="flex flex-col">
         <div class="mx-auto">
           <button data-text="Awesome" class="button">
-            <span class="actual-text">&nbsp;Scrappy&nbsp;</span>
+            <span class="actual-text">&nbsp;E-stash&nbsp;</span>
             <span class="hover-text" aria-hidden="true">
-              &nbsp;Scrappy&nbsp;
+              &nbsp;E-stash&nbsp;
             </span>
           </button>
         </div>
