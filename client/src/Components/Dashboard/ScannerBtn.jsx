@@ -10,10 +10,10 @@ const Scanner = () => {
     setError('');
     const file = event.target.files[0];
 
-    if (file.type !== 'image/jpeg') {
-      setError('Please upload a JPEG image.');
-      return;
-    }
+    // if (file.type !== 'image/jpeg') {
+    //   setError('Please upload a JPEG image.');
+    //   return;
+    // }
 
     const data = new FormData();
     data.append('image_file', file);
