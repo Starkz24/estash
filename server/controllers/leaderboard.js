@@ -16,6 +16,7 @@ const getLeaderboard = async (req, res) => {
         console.error('Error fetching leaderboard:', error.message);
         res.status(500).json({ error: 'An error occurred while fetching the leaderboard' });
     }
+    
 };
 
 module.exports = { getLeaderboard };
