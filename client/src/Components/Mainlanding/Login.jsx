@@ -1,9 +1,119 @@
+// import React, { useEffect, useState } from "react";
+// import TextField from "@mui/material/TextField";
+// import Button from "@mui/material/Button";
+// import { Link, useNavigate } from "react-router-dom";
+
+// const Signup = ({ setToken }) => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [error, setError] = useState('');
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//       setToken(true);
+//       navigate("/dashboard");
+//     }
+//   }, []);
+
+//   async function loginUser(event) {
+//     event.preventDefault();
+
+//     try {
+//       const response = await fetch('/api/login', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ email, password }),
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok && data.token) {
+//         localStorage.setItem("token", data.token);
+
+//         setToken(true);
+
+//         alert("Login successful!");
+
+//         navigate("/dashboard");
+//       } else {
+//         setError("Invalid username or password");
+//       }
+
+//     } catch (error) {
+//       console.error("Login error:", error);
+//       setError("Server error. Try again later.");
+//     }
+//   }
+
+//   return (
+//     <form onSubmit={loginUser}>
+      
+//       <div className="relative mb-5 flex justify-center">
+//         <TextField
+//           value={email}
+//           onChange={(e) => { setEmail(e.target.value); setError(''); }}
+//           type="email"
+//           required
+//           label="Email"
+//           sx={{
+//             input: { color: "white" },
+//             width: "43ch",
+//             "& .MuiInputLabel-root": { color: "#757575" },
+//             "& fieldset": { borderColor: "#64b5f6" }
+//           }}
+//         />
+//       </div>
+
+//       <div className="relative mb-6 flex justify-center">
+//         <TextField
+//           type="password"
+//           value={password}
+//           required
+//           onChange={(e) => { setPassword(e.target.value); setError(''); }}
+//           label="Password"
+//           sx={{
+//             input: { color: "white" },
+//             width: "43ch",
+//             "& .MuiInputLabel-root": { color: "#757575" },
+//             "& fieldset": { borderColor: "#64b5f6" }
+//           }}
+//         />
+//       </div>
+
+//       {error && (
+//         <div className="text-red-500 text-center mb-6">
+//           {error}
+//         </div>
+//       )}
+
+//       <div className="relative mb-6 flex justify-center">
+//         <Button type="submit" variant="contained" sx={{ width: "43ch" }}>
+//           Login
+//         </Button>
+//       </div>
+
+//       <div className="relative mb-6 flex justify-center">
+//         <h4 className="text-sm text-white">Not a member?</h4>
+//         <Link to="/register" className="text-blue-400 underline px-2">
+//           Register
+//         </Link>
+//       </div>
+
+//     </form>
+//   );
+// };
+
+// export default Signup;
+
+
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Signup = ({ setToken }) => {
+const Login = ({ setToken, setShowRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,25 +141,19 @@ const Signup = ({ setToken }) => {
 
       if (response.ok && data.token) {
         localStorage.setItem("token", data.token);
-
         setToken(true);
-
-        alert("Login successful!");
-
         navigate("/dashboard");
       } else {
         setError("Invalid username or password");
       }
-
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch {
       setError("Server error. Try again later.");
     }
   }
 
   return (
     <form onSubmit={loginUser}>
-      
+
       <div className="relative mb-5 flex justify-center">
         <TextField
           value={email}
@@ -57,12 +161,7 @@ const Signup = ({ setToken }) => {
           type="email"
           required
           label="Email"
-          sx={{
-            input: { color: "white" },
-            width: "43ch",
-            "& .MuiInputLabel-root": { color: "#757575" },
-            "& fieldset": { borderColor: "#64b5f6" }
-          }}
+          sx={{ input: { color: "white" }, width: "43ch" }}
         />
       </div>
 
@@ -73,12 +172,7 @@ const Signup = ({ setToken }) => {
           required
           onChange={(e) => { setPassword(e.target.value); setError(''); }}
           label="Password"
-          sx={{
-            input: { color: "white" },
-            width: "43ch",
-            "& .MuiInputLabel-root": { color: "#757575" },
-            "& fieldset": { borderColor: "#64b5f6" }
-          }}
+          sx={{ input: { color: "white" }, width: "43ch" }}
         />
       </div>
 
@@ -96,13 +190,16 @@ const Signup = ({ setToken }) => {
 
       <div className="relative mb-6 flex justify-center">
         <h4 className="text-sm text-white">Not a member?</h4>
-        <Link to="/register" className="text-blue-400 underline px-2">
+        <span
+          onClick={() => setShowRegister(true)}
+          className="text-blue-400 underline px-2 cursor-pointer"
+        >
           Register
-        </Link>
+        </span>
       </div>
 
     </form>
   );
 };
 
-export default Signup;
+export default Login;
