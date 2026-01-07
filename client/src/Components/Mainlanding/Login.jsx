@@ -113,6 +113,24 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
+
+const whiteField = {
+  width: "43ch",
+  input: { color: "white" },
+  "& .MuiInputLabel-root": { color: "white" },
+  "& .MuiInputLabel-root.Mui-focused": { color: "white" },
+  "& .MuiOutlinedInput-root fieldset": {
+    borderColor: "white",
+  },
+  "& .MuiOutlinedInput-root:hover fieldset": {
+    borderColor: "white",
+  },
+  "& .MuiOutlinedInput-root.Mui-focused fieldset": {
+    borderColor: "white",
+  },
+};
+
+
 const Login = ({ setToken, setShowRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -161,7 +179,8 @@ const Login = ({ setToken, setShowRegister }) => {
           type="email"
           required
           label="Email"
-          sx={{ input: { color: "white" }, width: "43ch" }}
+          // sx={{ input: { color: "white" }, width: "43ch" }}
+          sx={whiteField}
         />
       </div>
 
@@ -172,7 +191,8 @@ const Login = ({ setToken, setShowRegister }) => {
           required
           onChange={(e) => { setPassword(e.target.value); setError(''); }}
           label="Password"
-          sx={{ input: { color: "white" }, width: "43ch" }}
+          // sx={{ input: { color: "white" }, width: "43ch" }}
+          sx={whiteField}
         />
       </div>
 
